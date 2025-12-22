@@ -386,6 +386,7 @@ select {
 .pet-area:active {
     transform: scale(0.9);
 }
+
 /* Pro Zone */
 .pro-section {
     background: #000;
@@ -448,7 +449,7 @@ select {
 }
 
 .pro-item {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #FFD700;
@@ -479,34 +480,48 @@ select {
 }
 
 #ownerContent .pro-item {
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     color: white;
     margin-bottom: 10px;
 }
+
 /* Cleanup: Removing Member Styles */
 
 /* Starry Theme */
 body {
-    background-color: #00008B; /* Dark Blue */
+    background-color: #00008B;
+    /* Dark Blue */
     background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
-    color: #00008B !important; 
+    color: #00008B !important;
 }
 
-h1, h2, h3, h4, p, a, div, span {
-    color: #00008B; /* Force Dark Blue Text */
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+div,
+span {
+    color: #00008B;
+    /* Force Dark Blue Text */
 }
 
-.glass-card, .project-card, .content {
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #00008B;
-    border-radius: 30px;
-    padding: 30px;
+.glass-card,
+.project-card,
+.content {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50px;
+    padding: 40px;
     max-width: 1000px;
     margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 139, 0.2);
 }
 
 .section {
-    background: transparent; /* Use body star background */
+    background: transparent;
+    /* Use body star background */
 }
 
 /* Nav Link Color Override */
