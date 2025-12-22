@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artsy</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Quicksand:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header>
+        <h1 class="logo">Artsy</h1>
+        <p style="color: white; font-family: 'Quicksand'; margin-bottom: 5px;">Created by <a href="index.html"
+                style="color: white; font-weight: bold; text-decoration: underline;">Gabriella Hagenimana</a></p>
+        <div class="language-bar">
+            <button class="lang-btn active" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="fr">Français</button>
+            <button class="lang-btn" data-lang="es">Español</button>
+            <button class="lang-btn" data-lang="jp">日本語</button>
+            <button class="lang-btn" data-lang="kr">한국어</button>
+            <button class="lang-btn" data-lang="ph">Filipino</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="search-container glass-panel">
+            <input type="text" id="searchInput" placeholder="Search for inspiration...">
+            <div class="search-actions">
+                <button id="googleBtn" class="action-btn">
+                    <span class="icon">🔍</span> Google Images
+                </button>
+                <button id="pinterestBtn" class="action-btn">
+                    <span class="icon">📌</span> Pinterest
+                </button>
+            </div>
+        </div>
+
+        <div class="workspace-container">
+            <div class="canvas-area glass-panel">
+                <div class="canvas-controls">
+                    <input type="color" id="colorPicker" value="#000000">
+                    <input type="range" id="brushSize" min="1" max="50" value="5">
+                    <button id="clearCanvas">Clear</button>
+                </div>
+                <canvas id="drawingCanvas"></canvas>
+            </div>
+
+            <div class="ai-helper glass-panel">
+                <h3>✨ Drawing Assistant</h3>
+                <p id="aiPrompt">Need an idea?</p>
+                <button id="aiMagicBtn" class="magic-btn">Inspire Me!</button>
+                <div id="aiSuggestion" class="suggestion-box"></div>
+            </div>
+        </div>
+
+
+
+        <footer>
+            <button id="pinterestFooterBtn" class="floating-btn">
+                Go to Pinterest
+            </button>
+
+            <div class="credits">
+                <p>Credits: gabriella hagenimana loves kpop roblox and coding loves illit and familly</p>
+            </div>
+
+            <div class="music-player glass-panel">
+                <span class="music-icon">🎵</span>
+                <div class="music-info">
+                    <span class="track-name">Chill Lofi Beats</span>
+                    <div class="controls">
+                        <button id="playPauseBtn">▶</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="script.js"></script>
+</body>
+
+</html>

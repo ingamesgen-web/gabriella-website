@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriella's Presentation</title>
+    <link rel="stylesheet" href="gabriella.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Orbitron:wght@500&family=Pacifico&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="sticky-nav">
+        <div class="logo">GP</div>
+        <div class="nav-links">
+            <a href="#projects">🚀 Projects</a>
+            <a href="#funzone">🎉 Fun Zone</a>
+            <a href="#kpop">💖 K-Pop</a>
+        </div>
+        <button id="globalMusicBtn">🎵 Play Music</button>
+    </nav>
+
+    <header class="hero">
+        <h1>Welcome to <span class="highlight">Gabriella's Presentation</span></h1>
+        <p>Explore my world of Projects, K-Pop, Gaming, and Fun!</p>
+        <div class="scroll-down">⬇</div>
+    </header>
+
+    <section id="projects" class="section projects-section">
+        <div class="content">
+            <h2 style="color: white; margin-bottom: 30px; font-family: 'Pacifico'; font-size: 3rem;">🚀 My Projects</h2>
+            <div class="projects-grid">
+                <!-- Artsy Card -->
+                <div class="project-card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Artsy</h3>
+                    <p>A creative search engine with a drawing canvas and Miffy vibes.</p>
+                    <a href="artsy.html" class="project-btn">Visit Artsy</a>
+                </div>
+                <!-- Idea Generator Card -->
+                <div class="project-card">
+                    <div class="card-icon">💡</div>
+                    <h3>Idea Generator</h3>
+                    <p>Stuck on what to make? Click to get a random project idea!</p>
+                    <div id="ideaResult" style="min-height: 40px; font-weight: bold; color: #764ba2; margin: 5px 0;">
+                    </div>
+                    <button id="ideaBtn" class="project-btn">Generate Idea</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="funzone" class="section fun-section">
+        <div class="content glass-card" style="max-width: 800px;">
+            <h2>🎉 The Fun Zone 🎉</h2>
+            <div class="fun-grid">
+                <!-- Mood Switcher -->
+                <div class="fun-item">
+                    <h3>🌈 Mood Vibe</h3>
+                    <p>Change the website color to match your mood!</p>
+                    <div class="mood-btns">
+                        <button class="mood-btn" data-color="linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)">☁️
+                            Chill</button>
+                        <button class="mood-btn" data-color="linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%)">🎀
+                            Cute</button>
+                        <button class="mood-btn" data-color="linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)">💜
+                            Dreamy</button>
+                        <button class="mood-btn" data-color="linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)">🌿
+                            Fresh</button>
+                    </div>
+                </div>
+
+                <!-- Virtual Pet -->
+                <div class="fun-item">
+                    <h3>🐱 Pocket Pet</h3>
+                    <div id="petArea" class="pet-area">
+                        <span id="petIcon" style="font-size: 3rem;">🥚</span>
+                    </div>
+                    <p id="petStatus">Tap the egg to hatch!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kpop" class="section kpop-section">
+        <div class="content glass-card">
+            <h2>✨ K-Pop & ILLIT Zone ✨</h2>
+            <p>I love ILLIT and Family! Stan Magnetic!</p>
+
+            <div class="illit-activity">
+                <h3>🪪 Create Your Stan Card</h3>
+                <div class="stan-maker">
+                    <input type="text" id="stanName" placeholder="Your Name" maxlength="12">
+                    <select id="stanBias">
+                        <option value="Wonhee">Bias: Wonhee</option>
+                        <option value="Minju">Bias: Minju</option>
+                        <option value="Iroha">Bias: Iroha</option>
+                        <option value="Moka">Bias: Moka</option>
+                        <option value="Yunah">Bias: Yunah</option>
+                        <option value="OT5">Bias: OT5</option>
+                    </select>
+                    <button id="generateCardBtn" class="action-btn">✨ Generate Card</button>
+                </div>
+
+                <div id="stanCardDisplay" class="stan-card hidden">
+                    <div class="card-header">ILLIT STAN</div>
+                    <div class="card-photo">🎀</div>
+                    <div class="card-info">
+                        <h4 id="cardName">Name</h4>
+                        <p id="cardBias">Bias: OT5</p>
+                    </div>
+                    <div class="card-footer">Super Fan Verified ✅</div>
+                </div>
+
+                <button id="danceBtn" class="action-btn" style="margin-top: 20px;">💃 Enable Dance Mode</button>
+                <div id="danceFloor"><span class="dancer">👯‍♀️</span></div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <footer>
+        <p>Made with ❤️ by Gabriella Hagenimana</p>
+    </footer>
+
+    <script src="gabriella.js"></script>
+</body>
+
+</html>
