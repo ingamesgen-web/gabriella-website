@@ -166,6 +166,42 @@
 
             <p style="text-align: center; font-style: italic; color: #666;">(Real visitors will appear here!)</p>
         </div>
+
+        <!-- CODING LAB -->
+        <h2 style="margin-top: 50px;">🧪 Secret Coding Lab</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+
+            <!-- Code Playground -->
+            <div style="flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 20px;">
+                <h3>Code Playground 🏗️</h3>
+                <p>Type HTML code here and click Run!</p>
+                <textarea id="codeInput"
+                    style="width: 100%; height: 200px; font-family: monospace; border: 2px solid #81c784; border-radius: 10px; padding: 10px;"
+                    placeholder="<h1>Hello World!</h1><p>I am coding!</p>"></textarea>
+                <br>
+                <button onclick="runCode()" style="margin-top: 10px; width: 100%;">Run Code ▶️</button>
+                <div style="margin-top: 20px; border: 2px dashed #ccc; border-radius: 10px; padding: 10px;">
+                    <h4>Preview:</h4>
+                    <iframe id="codePreview"
+                        style="width: 100%; height: 200px; border: none; background: white;"></iframe>
+                </div>
+            </div>
+
+            <!-- MiffyBot Chat -->
+            <div style="flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 20px;">
+                <h3>Chat with MiffyBot 🐰</h3>
+                <div id="chatBox"
+                    style="height: 300px; border: 2px solid #a5d6a7; border-radius: 10px; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f1f8e9;">
+                    <div class="msg miffy-msg"><strong>MiffyBot:</strong> Hi Gabriella! I'm ready to help you code. 🥕
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="text" id="userMsg" placeholder="Say hi..." style="flex: 1;"
+                        onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -177,6 +213,65 @@
             } else {
                 document.getElementById('errorMsg').style.display = 'block';
             }
+        }
+
+        // Code Playground
+        function runCode() {
+            const code = document.getElementById('codeInput').value;
+            const preview = document.getElementById('codePreview').contentWindow.document;
+            preview.open();
+            preview.write(code);
+            preview.close();
+        }
+
+        // MiffyBot
+        function sendMessage() {
+            const input = document.getElementById('userMsg');
+            const chatBox = document.getElementById('chatBox');
+            const msg = input.value.trim();
+
+            if (msg === "") return;
+
+            // User Message
+            const userBubble = document.createElement('div');
+            userBubble.innerHTML = "<strong>You:</strong> " + msg;
+            userBubble.style.alignSelf = "flex-end";
+            userBubble.style.background = "#fff";
+            userBubble.style.padding = "8px";
+            userBubble.style.borderRadius = "10px 10px 0 10px";
+            userBubble.style.maxWidth = "80%";
+            chatBox.appendChild(userBubble);
+
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Simulate Thinking
+            setTimeout(() => {
+                const response = getMiffyResponse(msg.toLowerCase());
+                const botBubble = document.createElement('div');
+                botBubble.innerHTML = "<strong>MiffyBot:</strong> " + response;
+                botBubble.style.alignSelf = "flex-start";
+                botBubble.style.background = "#c8e6c9";
+                botBubble.style.padding = "8px";
+                botBubble.style.borderRadius = "10px 10px 10px 0";
+                botBubble.style.maxWidth = "80%";
+                chatBox.appendChild(botBubble);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+
+        function getMiffyResponse(text) {
+            if (text.includes("hello") || text.includes("hi")) return "Hello friend! Are we making something cool today? 🌸";
+            if (text.includes("bug") || text.includes("error")) return "Oh no! Have you checked for missing semicolons? ; They are sneaky! 🐛";
+            if (text.includes("idea")) return "How about making a button that changes the background color? 🎨";
+            if (text.includes("snoopy")) return "Snoopy is sleeping on the roof. Shhh! 🤫";
+            if (text.includes("help")) return "I can help! Try typing `<h1>My Title</h1>` in the playground box!";
+            if (text.includes("bye")) return "See you later! Happy coding! 👋";
+            return "That sounds interesting! Tell me more about your code! 💻";
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
         }
     </script>
 </body>
