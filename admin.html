@@ -202,6 +202,42 @@
                 </div>
             </div>
         </div>
+
+        <!-- MISSION CONTROL (Site Editor) -->
+        <h2 style="margin-top: 50px;">🚀 Mission Control (Site Editor)</h2>
+        <div style="background: white; padding: 30px; border-radius: 20px; max-width: 800px; margin: 0 auto 50px;">
+            <p>Update your REAL website from here!</p>
+
+            <!-- Auth -->
+            <div style="margin-bottom: 20px; padding: 15px; background: #fff3e0; border-radius: 10px;">
+                <label><strong>🔑 Admin Key (GitHub Token):</strong></label>
+                <input type="password" id="adminKey" placeholder="Paste your Magic Key here" style="width: 60%;">
+                <button onclick="saveKey()" style="background: #ff9800;">Save Key</button>
+                <span id="keyStatus" style="margin-left: 10px; font-size: 0.9rem;"></span>
+            </div>
+
+            <!-- File Selector -->
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <select id="fileSelect" style="flex: 1;">
+                    <option value="index.html">Home Page (index.html)</option>
+                    <option value="gabriella.css">Styles (gabriella.css)</option>
+                    <option value="artsy.html">Artsy Page (artsy.html)</option>
+                </select>
+                <button onclick="loadFile()">📂 Load File</button>
+            </div>
+
+            <!-- Editor -->
+            <textarea id="fileEditor"
+                style="width: 100%; height: 300px; font-family: monospace; border: 2px solid #ccc; border-radius: 10px; padding: 10px;"
+                placeholder="Click 'Load File' to see code..."></textarea>
+
+            <!-- Actions -->
+            <div style="margin-top: 15px; text-align: right;">
+                <input type="text" id="commitMsg" placeholder="What did you change?" style="width: 50%;">
+                <button onclick="publishChanges()" style="background: #f44336;">🚀 Publish Changes</button>
+            </div>
+            <p id="publishStatus" style="margin-top: 10px; font-weight: bold;"></p>
+        </div>
     </div>
 
     <script>
@@ -210,8 +246,103 @@
             if (pass === "gabby123") {
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboardContent').classList.remove('hidden');
+                loadKey();
             } else {
                 document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        // --- MISSION CONTROL LOGIC ---
+        const REPO = "ingamesgen-web/gabriella-website";
+        let currentFileSha = "";
+
+        function saveKey() {
+            const key = document.getElementById('adminKey').value;
+            localStorage.setItem('gh_key', key);
+            document.getElementById('keyStatus').innerText = "✅ Saved!";
+            setTimeout(() => document.getElementById('keyStatus').innerText = "", 2000);
+        }
+
+        function loadKey() {
+            const key = localStorage.getItem('gh_key');
+            if (key) {
+                document.getElementById('adminKey').value = key;
+                document.getElementById('keyStatus').innerText = "✅ Loaded from memory";
+            }
+        }
+
+        async function loadFile() {
+            const file = document.getElementById('fileSelect').value;
+            const token = document.getElementById('adminKey').value;
+
+            if (!token) { alert("Please enter your Admin Key first!"); return; }
+
+            document.getElementById('fileEditor').value = "Loading...";
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${REPO}/contents/${file}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                const data = await response.json();
+
+                if (data.content) {
+                    // content is base64 encoded
+                    const content = new TextDecoder().decode(Uint8Array.from(atob(data.content), c => c.charCodeAt(0)));
+                    document.getElementById('fileEditor').value = content;
+                    currentFileSha = data.sha;
+                } else {
+                    alert("Error loading file: " + data.message);
+                }
+            } catch (e) {
+                alert("Error: " + e.message);
+            }
+        }
+
+        async function publishChanges() {
+            const file = document.getElementById('fileSelect').value;
+            const content = document.getElementById('fileEditor').value;
+            const msg = document.getElementById('commitMsg').value || "Update from Mission Control";
+            const token = document.getElementById('adminKey').value;
+
+            if (!token) { alert("Missing Admin Key!"); return; }
+            if (!currentFileSha) { alert("Please load the file first!"); return; }
+
+            const status = document.getElementById('publishStatus');
+            status.innerText = "⏳ Publishing to GitHub...";
+            status.style.color = "orange";
+
+            // Encode content to Base64
+            const encodedContent = btoa(new TextEncoder().encode(content).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${REPO}/contents/${file}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: msg,
+                        content: encodedContent,
+                        sha: currentFileSha
+                    })
+                });
+
+                if (response.ok) {
+                    status.innerText = "✅ Success! Changes are live (give it 1 minute).";
+                    status.style.color = "green";
+
+                    // Update SHA for next commit
+                    const data = await response.json();
+                    currentFileSha = data.content.sha;
+                } else {
+                    const err = await response.json();
+                    status.innerText = "❌ Error: " + err.message;
+                    status.style.color = "red";
+                }
+            } catch (e) {
+                status.innerText = "❌ Network Error: " + e.message;
+                status.style.color = "red";
             }
         }
 
