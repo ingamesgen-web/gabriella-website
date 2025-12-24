@@ -386,7 +386,21 @@
             }
         }
 
-        // MiffyBot
+        // MiffyBot V2
+        const responseData = {
+            greetings: ["Hello Gabriella! Ready for a code adventure? 🥕", "Hi friend! What are we building today? 🌸", "Miffy is here and ready to help! 🐰"],
+            jokes: ["Why did the web developer walk out of a restaurant? Because of the table layout! 😂", "Parallel lines have so much in common. It’s a shame they’ll never meet! 📏", "What’s a bunny’s favorite way to travel? By hare-plane! ✈️"],
+            coding: {
+                css: "CSS is like the paint and clothes for your website! It makes it look beautiful. 🎨",
+                html: "HTML is the skeleton of your site. It holds everything together! 🦴",
+                js: "JavaScript is the brain! It makes things move and click. 🧠",
+                bug: "Bugs are just spicy features! Let's check those brackets `{}`. 🐛",
+                fix: "Try refreshing the page, that's the secret magic spell! 🪄"
+            },
+            fun_facts: ["Did you know bunnies can jump really high? Just like your code can reach the stars! ✨", "Miffy loves carrots, but she loves clean code even more! 🥕", "The first computer bug was a real moth! 🦋"],
+            fallback: "That sounds like a great plan! Can Miffy help you with more code? 💻"
+        };
+
         function sendMessage() {
             const input = document.getElementById('userMsg');
             const chatBox = document.getElementById('chatBox');
@@ -399,37 +413,53 @@
             userBubble.innerHTML = "<strong>You:</strong> " + msg;
             userBubble.style.alignSelf = "flex-end";
             userBubble.style.background = "#fff";
-            userBubble.style.padding = "8px";
-            userBubble.style.borderRadius = "10px 10px 0 10px";
+            userBubble.style.padding = "10px";
+            userBubble.style.borderRadius = "15px 15px 0 15px";
             userBubble.style.maxWidth = "80%";
+            userBubble.style.boxShadow = "0 2px 5px rgba(0,0,0,0.05)";
             chatBox.appendChild(userBubble);
 
             input.value = "";
             chatBox.scrollTop = chatBox.scrollHeight;
 
+            // Typing Indicator
+            const typingMsg = document.createElement('div');
+            typingMsg.id = "typingIndicator";
+            typingMsg.innerHTML = "<em>MiffyBot is typing... 🥕</em>";
+            typingMsg.style.alignSelf = "flex-start";
+            typingMsg.style.fontSize = "0.8rem";
+            typingMsg.style.color = "#666";
+            chatBox.appendChild(typingMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             // Simulate Thinking
             setTimeout(() => {
+                document.getElementById('typingIndicator').remove();
                 const response = getMiffyResponse(msg.toLowerCase());
                 const botBubble = document.createElement('div');
                 botBubble.innerHTML = "<strong>MiffyBot:</strong> " + response;
                 botBubble.style.alignSelf = "flex-start";
                 botBubble.style.background = "#c8e6c9";
-                botBubble.style.padding = "8px";
-                botBubble.style.borderRadius = "10px 10px 10px 0";
+                botBubble.style.padding = "10px";
+                botBubble.style.borderRadius = "15px 15px 15px 0";
                 botBubble.style.maxWidth = "80%";
+                botBubble.style.boxShadow = "0 2px 5px rgba(0,0,0,0.05)";
                 chatBox.appendChild(botBubble);
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
+            }, 1500);
         }
 
         function getMiffyResponse(text) {
-            if (text.includes("hello") || text.includes("hi")) return "Hello friend! Are we making something cool today? 🌸";
-            if (text.includes("bug") || text.includes("error")) return "Oh no! Have you checked for missing semicolons? ; They are sneaky! 🐛";
-            if (text.includes("idea")) return "How about making a button that changes the background color? 🎨";
-            if (text.includes("snoopy")) return "Snoopy is sleeping on the roof. Shhh! 🤫";
-            if (text.includes("help")) return "I can help! Try typing `<h1>My Title</h1>` in the playground box!";
-            if (text.includes("bye")) return "See you later! Happy coding! 👋";
-            return "That sounds interesting! Tell me more about your code! 💻";
+            if (text.includes("hello") || text.includes("hi")) return responseData.greetings[Math.floor(Math.random() * responseData.greetings.length)];
+            if (text.includes("joke")) return responseData.jokes[Math.floor(Math.random() * responseData.jokes.length)];
+            if (text.includes("css")) return responseData.coding.css;
+            if (text.includes("html")) return responseData.coding.html;
+            if (text.includes("javascript") || text.includes("js")) return responseData.coding.js;
+            if (text.includes("bug") || text.includes("error")) return responseData.coding.bug;
+            if (text.includes("fact")) return responseData.fun_facts[Math.floor(Math.random() * responseData.fun_facts.length)];
+            if (text.includes("bye") || text.includes("see you")) return "See you later, Gabriella! Happy coding! 👋🐰";
+            if (text.includes("help")) return "I'm a bunny built for help! You can ask me about HTML, CSS, facts, or jokes!";
+            return responseData.fallback;
         }
 
         function handleKeyPress(e) {
